@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEET Premium Study Dashboard</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#0f172a,#020617);
+  color:#e2e8f0;
+}
+
+.wrap{max-width:1200px;margin:auto;padding:20px}
+
+/* Glass cards */
+.chapter-card, .recall-card {
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(16px);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  transition:0.3s;
+}
+
+.chapter-card:hover{transform:translateY(-4px) scale(1.01)}
+
+/* Tabs */
+.tab-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.tab{
+  padding:10px 18px;border-radius:25px;
+  background:#1e293b;color:#94a3b8;
+  cursor:pointer;border:none;transition:.3s;
+}
+.tab.active{
+  background:linear-gradient(135deg,#6366f1,#22c55e);
+  color:white;
+  box-shadow:0 6px 20px rgba(99,102,241,0.4);
+}
+
+/* Buttons */
+button:hover{transform:scale(1.05)}
+
+/* Progress bar */
+.prog-bar{background:#1e293b;border-radius:6px}
+.prog-fill{background:linear-gradient(90deg,#6366f1,#22c55e)}
+
+/* Inputs */
+input, select{
+  background:#020617;color:#e2e8f0;
+  border:1px solid #334155;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<h1 style="margin-bottom:20px;font-size:22px;font-weight:600;">
+🔥 NEET Biology Premium Dashboard
+</h1>
+
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.wrap{padding:1rem 0;color:var(--color-text-primary);font-family:var(--font-sans)}
+.tab-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.2rem}
+.tab{padding:7px 14px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);transition:all .15s}
+.tab.active{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.panel{display:none}.panel.active{display:block}
+.chapter-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:12px}
+.ch-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ch-title{font-size:15px;font-weight:500}
+.badge{font-size:11px;padding:3px 10px;border-radius:12px;font-weight:500}
+.badge-red{background:var(--color-background-danger);color:var(--color-text-danger)}
+.badge-amber{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-green{background:var(--color-background-success);color:var(--color-text-success)}
+.badge-blue{background:var(--color-background-info);color:var(--color-text-info)}
+.section-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;color:var(--color-text-tertiary);margin:10px 0 5px}
+.item-list{list-style:none;padding:0}
+.item-list li{font-size:13px;line-height:1.6;padding:3px 0;display:flex;gap:8px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.item-list li:last-child{border-bottom:none}
+.dot{min-width:6px;height:6px;border-radius:50%;margin-top:7px;flex-shrink:0}
+.dot-red{background:var(--color-text-danger)}
+.dot-amber{background:var(--color-text-warning)}
+.dot-green{background:var(--color-text-success)}
+.dot-blue{background:var(--color-text-info)}
+.dot-purple{background:#7F77DD}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:10px}
+.method-box{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px}
+.method-title{font-size:13px;font-weight:500;margin-bottom:6px}
+.method-body{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+.resource-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.resource-row:last-child{border-bottom:none}
+.res-name{font-weight:500}
+.res-use{font-size:12px;color:var(--color-text-secondary)}
+.res-type{font-size:11px;padding:2px 8px;border-radius:10px}
+.tip-box{background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);border-radius:var(--border-radius-md);padding:10px 12px;margin-top:8px;font-size:13px;color:var(--color-text-warning);line-height:1.5}
+.ncert-box{background:var(--color-background-info);border:0.5px solid var(--color-border-info);border-radius:var(--border-radius-md);padding:10px 12px;margin-top:8px;font-size:13px;color:var(--color-text-info);line-height:1.5}
+.tracker-row{display:grid;grid-template-columns:160px 1fr 60px;gap:8px;align-items:center;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.tracker-row:last-child{border-bottom:none}
+.prog-bar{background:var(--color-border-tertiary);border-radius:4px;height:6px;overflow:hidden}
+.prog-fill{height:6px;border-radius:4px;background:var(--color-text-info);width:0%;transition:width .4s}
+.recall-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:10px}
+.recall-q{font-size:14px;font-weight:500;margin-bottom:8px}
+.reveal-btn{font-size:12px;padding:5px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer}
+.recall-ans{font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-top:8px;display:none;border-top:0.5px solid var(--color-border-tertiary);padding-top:8px}
+.recall-ans.show{display:block}
+.study-step{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start}
+.step-num{min-width:26px;height:26px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-body{font-size:13px;line-height:1.6;color:var(--color-text-secondary);flex:1}
+.step-body strong{color:var(--color-text-primary);font-weight:500}
+.mistake-table{width:100%;border-collapse:collapse;font-size:12px}
+.mistake-table th{background:var(--color-background-secondary);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:6px 8px;text-align:left;border-bottom:0.5px solid var(--color-border-secondary)}
+.mistake-table td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
+.mistake-table tr:last-child td{border-bottom:none}
+</style>
+
+<div class="wrap">
+<h2 class="sr-only">Detailed NEET Biology study guide with chapter strategies, methods, resources, and active recall tools</h2>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="showTab('chapters')">Chapter Strategies</button>
+  <button class="tab" onclick="showTab('method')">How to Study</button>
+  <button class="tab" onclick="showTab('resources')">Resources</button>
+  <button class="tab" onclick="showTab('recall')">Active Recall Practice</button>
+  <button class="tab" onclick="showTab('tracker')">Progress Tracker</button>
+  <button class="tab" onclick="showTab('mistakes')">Mistake Log</button>
+</div>
+
+<div id="tab-chapters" class="panel active">
+
+  <div class="chapter-card">
+    <div class="ch-header">
+      <span class="ch-title">Genetics &amp; Molecular Biology</span>
+      <span class="badge badge-red">~30 Qs · Days 4,5,7</span>
+    </div>
+    <div class="section-label">Exact NCERT focus</div>
+    <ul class="item-list">
+      <li><div class="dot dot-red"></div>Ch 5 (12th): Mendel's laws — read every experiment description word by word. NEET asks "who said what".</li>
+      <li><div class="dot dot-red"></div>Ch 5: Punnett squares for dihybrid cross — practise drawing, not just reading.</li>
+      <li><div class="dot dot-red"></div>Ch 5: Deviations table — codominance vs incomplete dominance — know examples (ABO blood group, snapdragon).</li>
+      <li><div class="dot dot-red"></div>Ch 5: Chromosomal disorders — memorise chromosome number: Down's (47,+21), Turner's (45,XO), Klinefelter's (47,XXY).</li>
+      <li><div class="dot dot-red"></div>Ch 6 (12th): DNA structure — Chargaff's rule, Watson-Crick model, B-DNA specifics.</li>
+      <li><div class="dot dot-red"></div>Ch 6: Replication enzymes in order — Helicase → Primase → DNA Pol III → DNA Pol I → Ligase.</li>
+      <li><div class="dot dot-red"></div>Ch 6: Transcription vs Translation — know which enzymes, where (nucleus vs ribosome), what is produced.</li>
+      <li><div class="dot dot-red"></div>Ch 6: Lac operon — inducer, repressor, structural genes. Most repeated NEET topic in this chapter.</li>
+    </ul>
+    <div class="section-label">Key diagrams to draw from memory</div>
+    <ul class="item-list">
+      <li><div class="dot dot-amber"></div>DNA double helix with labelled bases, sugar-phosphate backbone, H-bonds</li>
+      <li><div class="dot dot-amber"></div>Replication fork with all enzymes labelled at correct positions</li>
+      <li><div class="dot dot-amber"></div>Lac operon — off state (repressor bound) vs on state (inducer present)</li>
+    </ul>
+    <div class="ncert-box">NCERT trick: The exact chromosome number in disorders is directly asked. Make a table: Disorder | Chromosome | Number | Key feature. Takes 10 minutes, earns 4+ marks.</div>
+    <div class="tip-box">MCQ trap: NEET often asks "which enzyme seals Okazaki fragments?" Answer: DNA Ligase (not Pol I). Know the difference between their roles.</div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="ch-header">
+      <span class="ch-title">Human Physiology</span>
+      <span class="badge badge-red">~25 Qs · Days 10,11</span>
+    </div>
+    <div class="section-label">Exact NCERT focus</div>
+    <ul class="item-list">
+      <li><div class="dot dot-red"></div>Ch 16 (11th): Digestion — enzyme + substrate + product table for each organ. Know pH of each region.</li>
+      <li><div class="dot dot-red"></div>Ch 16: Villi structure, role of lacteals, hepatic portal vein path.</li>
+      <li><div class="dot dot-red"></div>Ch 18 (11th): Cardiac cycle phases — systole, diastole, duration (0.8 sec total). Lub-dub sounds and cause.</li>
+      <li><div class="dot dot-red"></div>Ch 18: Blood components — RBC lifespan (120 days), WBC types and functions, platelet count.</li>
+      <li><div class="dot dot-red"></div>Ch 17 (11th): Breathing — tidal volume (500 mL), vital capacity (3400–4800 mL), residual volume (1200 mL). These numbers are directly asked.</li>
+      <li><div class="dot dot-red"></div>Ch 19 (11th): Nephron diagram — PCT, Loop of Henle, DCT, collecting duct — what is reabsorbed where.</li>
+      <li><div class="dot dot-red"></div>Ch 21 (11th): All endocrine glands — hormone name, target organ, hypo/hypersecretion disease. This is a table topic.</li>
+      <li><div class="dot dot-red"></div>Ch 21: Neuron structure, resting potential (-70mV), action potential mechanism — Na+ in, K+ out.</li>
+    </ul>
+    <div class="ncert-box">NCERT trick: Make one master table for hormones: Gland | Hormone | Function | Deficiency disease. This single table covers 6–8 NEET questions every year.</div>
+    <div class="tip-box">MCQ trap: Students confuse "pulmonary" (lung) and "systemic" circulation directions. Pulmonary artery carries deoxygenated blood — counter-intuitive. Memorise as an exception.</div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="ch-header">
+      <span class="ch-title">Plant Physiology — Photosynthesis &amp; Respiration</span>
+      <span class="badge badge-amber">~12 Qs · Days 8,9</span>
+    </div>
+    <div class="section-label">Exact NCERT focus (your weak area — extra detail)</div>
+    <ul class="item-list">
+      <li><div class="dot dot-red"></div>Ch 13 (11th): Photosynthetic pigments — chlorophyll a, b, carotenoids, xanthophylls. Know absorption peaks.</li>
+      <li><div class="dot dot-red"></div>Ch 13: Light reaction — PS II absorbs at 680nm, PS I at 700nm. Photolysis of water releases O2.</li>
+      <li><div class="dot dot-red"></div>Ch 13: Calvin cycle inputs/outputs — 3 CO2 → 1 G3P. RuBisCO is the enzyme. 3 turns needed per G3P.</li>
+      <li><div class="dot dot-red"></div>Ch 13: C4 plants — bundle sheath cells + mesophyll cells. Examples: maize, sugarcane, sorghum.</li>
+      <li><div class="dot dot-red"></div>Ch 13: CAM plants — stomata open at night. Examples: cacti, agaves, pineapple.</li>
+      <li><div class="dot dot-red"></div>Ch 14 (11th): Glycolysis — 10 steps not needed; know net ATP (2), NADH (2), pyruvate (2).</li>
+      <li><div class="dot dot-red"></div>Ch 14: Krebs cycle — per glucose: 6 CO2, 8 NADH, 2 FADH2, 2 ATP (substrate-level).</li>
+      <li><div class="dot dot-red"></div>Ch 14: Total ATP — 36–38 per glucose (aerobic). Fermentation = 2 ATP only.</li>
+    </ul>
+    <div class="section-label">The confusion fix — photosynthesis vs respiration</div>
+    <ul class="item-list">
+      <li><div class="dot dot-purple"></div>Draw both cycles side by side. Calvin cycle: CO2 IN → sugar OUT. Krebs: sugar IN → CO2 OUT.</li>
+      <li><div class="dot dot-purple"></div>Both use NADH but opposite directions — Calvin regenerates NADPH, Krebs produces NADH.</li>
+      <li><div class="dot dot-purple"></div>Location: Photosynthesis = chloroplast stroma (Calvin) + thylakoid (light rxn). Respiration = cytoplasm (glycolysis) + mitochondrial matrix (Krebs).</li>
+    </ul>
+    <div class="tip-box">MCQ trap: "Where does O2 evolution occur?" — Thylakoid membrane (during photolysis), NOT stroma. Students write stroma and lose marks.</div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="ch-header">
+      <span class="ch-title">Cell Biology &amp; Cell Division</span>
+      <span class="badge badge-amber">~18 Qs · Days 1,2</span>
+    </div>
+    <div class="section-label">Exact NCERT focus</div>
+    <ul class="item-list">
+      <li><div class="dot dot-red"></div>Ch 8 (11th): Prokaryote vs eukaryote comparison table — wall composition, organelles, ribosome size (70S vs 80S).</li>
+      <li><div class="dot dot-red"></div>Ch 8: All organelle functions — especially ER (smooth vs rough), Golgi (cis vs trans face), lysosomes ("suicide bags").</li>
+      <li><div class="dot dot-red"></div>Ch 10 (11th): Mitosis — PMAT stages, what happens at each. Chromosome vs chromatid count at each stage.</li>
+      <li><div class="dot dot-red"></div>Ch 10: Meiosis — crossing over in Prophase I (pachytene). Chiasmata formation. Terminal vs localised.</li>
+      <li><div class="dot dot-red"></div>Ch 10: Significance of meiosis — genetic variation, haploid gametes. NEET asks this conceptually.</li>
+    </ul>
+    <div class="tip-box">MCQ trap: Ribosome size — 80S in cytoplasm of eukaryotes but 70S in chloroplasts and mitochondria of eukaryotes. This is a classic NEET trick question.</div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="ch-header">
+      <span class="ch-title">Classification (Animal + Plant Kingdom)</span>
+      <span class="badge badge-green">~10 Qs · Day 16 · Your weak area</span>
+    </div>
+    <div class="section-label">Strategy — do NOT read deeply. Use tables only.</div>
+    <ul class="item-list">
+      <li><div class="dot dot-green"></div>Animal Kingdom: Learn basis of classification first (body plan, symmetry, coelom, notochord).</li>
+      <li><div class="dot dot-green"></div>For each phylum: 1 distinguishing feature + 2 examples only. That is enough for NEET.</li>
+      <li><div class="dot dot-green"></div>High-yield phyla: Porifera, Cnidaria, Platyhelminthes, Nematoda, Annelida, Arthropoda, Mollusca, Echinodermata, Chordata.</li>
+      <li><div class="dot dot-green"></div>Plant Kingdom: Focus on alternation of generations pattern. Know dominant phase for each group.</li>
+      <li><div class="dot dot-green"></div>Plant groups table: Thallophyta → Bryophyta → Pteridophyta → Gymnosperms → Angiosperms. Key feature of each + 1 example.</li>
+    </ul>
+    <div class="ncert-box">Time-saving rule: Spend maximum 90 minutes on ALL of classification. Use only NCERT summary boxes and tables at end of chapters. Do not re-read paragraphs.</div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="ch-header">
+      <span class="ch-title">Ecology</span>
+      <span class="badge badge-amber">~15 Qs · Day 14</span>
+    </div>
+    <ul class="item-list">
+      <li><div class="dot dot-red"></div>Ch 13,14 (12th): Ecosystem — producers, consumers, decomposers. Energy flow: 10% law (Lindemann).</li>
+      <li><div class="dot dot-red"></div>Biogeochemical cycles — N cycle (bacteria names: Nitrosomonas, Nitrobacter, Rhizobium, Pseudomonas). These names are directly asked.</li>
+      <li><div class="dot dot-red"></div>Population interactions table — mutualism, commensalism, parasitism, predation, competition — know example for each.</li>
+      <li><div class="dot dot-red"></div>Ecological succession — primary vs secondary, climax community concept.</li>
+      <li><div class="dot dot-red"></div>Biodiversity — hotspots in India (Western Ghats, Eastern Himalayas). In-situ vs ex-situ conservation with examples.</li>
+    </ul>
+    <div class="tip-box">High-yield: Bacteria names in N-cycle are asked almost every year. Nitrification (Nitrosomonas → Nitrobacter), Denitrification (Pseudomonas). Make flashcards for these.</div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="ch-header">
+      <span class="ch-title">Biotechnology</span>
+      <span class="badge badge-amber">~12 Qs · Day 13</span>
+    </div>
+    <ul class="item-list">
+      <li><div class="dot dot-red"></div>Ch 11 (12th): Tools of recombinant DNA — restriction enzymes (EcoRI, HindIII), vectors (plasmids, bacteriophages).</li>
+      <li><div class="dot dot-red"></div>PCR steps — denaturation (94°C) → annealing (~55°C) → extension (72°C, Taq polymerase). Temperatures are asked.</li>
+      <li><div class="dot dot-red"></div>Gel electrophoresis — smaller fragments move faster, farther. Ethidium bromide stain.</li>
+      <li><div class="dot dot-red"></div>Ch 12 (12th): Bt toxin — cry genes, cry1Ac (bollworm), cry2Ab (bollworm), cry1Ab (corn borer).</li>
+      <li><div class="dot dot-red"></div>ADA deficiency — first gene therapy case. Know the cell type targeted (T-lymphocytes) and enzyme (adenosine deaminase).</li>
+      <li><div class="dot dot-red"></div>ELISA, DNA fingerprinting — principle and application. Not mechanism depth.</li>
+    </ul>
+    <div class="tip-box">MCQ trap: EcoRI cuts between G and AATTC — it creates sticky ends. HindIII also creates sticky ends. PVUII creates blunt ends. This distinction is frequently tested.</div>
+  </div>
+
+</div>
+
+<div id="tab-method" class="panel">
+  <div style="font-size:14px;font-weight:500;margin-bottom:12px">The 5-step daily study method — use this every single session</div>
+
+  <div class="study-step">
+    <div class="step-num">1</div>
+    <div class="step-body"><strong>Survey (5 min):</strong> Open NCERT chapter. Read only headings, subheadings, bold words, and summary. Get the skeleton before the flesh. This primes your brain to absorb better.</div>
+  </div>
+  <div class="study-step">
+    <div class="step-num">2</div>
+    <div class="step-body"><strong>Active read (45–60 min):</strong> Read line by line. Every time you see a number, name, or definition — underline it. Every time you see a comparison — put a bracket and write "compare" in margin. Every diagram — trace it with your finger, then copy it in rough on paper.</div>
+  </div>
+  <div class="study-step">
+    <div class="step-num">3</div>
+    <div class="step-body"><strong>Close and recall (10 min):</strong> Close the book. Open blank notebook. Write everything you remember — facts, diagrams, tables. No peeking. This is the single most powerful retention tool known to science. It feels uncomfortable — that discomfort is learning.</div>
+  </div>
+  <div class="study-step">
+    <div class="step-num">4</div>
+    <div class="step-body"><strong>MCQ sprint (20–25 min):</strong> Solve 20 PYQs on today's topic. Do not check answers during solving. After finishing — mark, check, and for every wrong answer: find the NCERT line that gives the correct answer. Log it in your mistake notebook.</div>
+  </div>
+  <div class="study-step">
+    <div class="step-num">5</div>
+    <div class="step-body"><strong>Night flash review (10 min):</strong> Before sleeping, review 5 key facts from today without notes. Say them aloud. This triggers memory consolidation during sleep — it is not optional.</div>
+  </div>
+
+  <div style="height:1px;background:var(--color-border-tertiary);margin:16px 0"></div>
+
+  <div style="font-size:14px;font-weight:500;margin-bottom:10px">How to tackle diagrams (your biggest scoring opportunity)</div>
+  <div class="grid2">
+    <div class="method-box">
+      <div class="method-title">Step 1 — Copy first</div>
+      <div class="method-body">Copy the NCERT diagram exactly. Label every part. Use a pencil. This forces your visual memory to engage.</div>
+    </div>
+    <div class="method-box">
+      <div class="method-title">Step 2 — Draw from memory</div>
+      <div class="method-body">Close book. Draw from scratch. Compare with original. Missing labels = weak spots. Repeat only those parts.</div>
+    </div>
+    <div class="method-box">
+      <div class="method-title">Step 3 — Attach a question</div>
+      <div class="method-body">For each labelled part, write one question. "What does the Bundle of His do?" Answer from memory.</div>
+    </div>
+    <div class="method-box">
+      <div class="method-title">Step 4 — Revise at Day 3 and Day 7</div>
+      <div class="method-body">Redraw the diagram again on Day 3, then Day 7. By Day 7 it should take under 2 minutes. That is exam-ready.</div>
+    </div>
+  </div>
+
+  <div style="height:1px;background:var(--color-border-tertiary);margin:16px 0"></div>
+
+  <div style="font-size:14px;font-weight:500;margin-bottom:10px">How to handle panic in exam (your #1 problem)</div>
+  <div class="method-box" style="margin-bottom:8px">
+    <div class="method-title">The 3-second rule</div>
+    <div class="method-body">If you read a question and feel panic: count 3 seconds slowly. Re-read only the last line of the question (it tells you what is being asked). Eliminate 2 options first. Then decide between the remaining 2. Never re-read the whole question in panic mode — it wastes time and amplifies confusion.</div>
+  </div>
+  <div class="method-box">
+    <div class="method-title">Build exam speed now — not on exam day</div>
+    <div class="method-body">In every MCQ practice session: set a timer. 40 seconds per question maximum. When the alarm goes off, mark your best guess and move on. Do this daily from Day 1. By Day 12 your brain will be conditioned to decide fast. Exam panic comes from unfamiliarity with time pressure — eliminate it in practice.</div>
+  </div>
+</div>
+
+<div id="tab-resources" class="panel">
+  <div style="font-size:14px;font-weight:500;margin-bottom:12px">Vetted resources — use these, nothing else</div>
+
+  <div class="chapter-card">
+    <div class="ch-header"><span class="ch-title">Primary — non-negotiable</span></div>
+    <div class="resource-row">
+      <div><div class="res-name">NCERT Class 11 &amp; 12 Biology</div><div class="res-use">Every word, every diagram, every table. This is 90% of NEET Biology.</div></div>
+      <span class="badge badge-red">Must</span>
+    </div>
+    <div class="resource-row">
+      <div><div class="res-name">NCERT Exemplar (Bio)</div><div class="res-use">MCQs, assertion-reason, case-based. Practice after each NCERT chapter.</div></div>
+      <span class="badge badge-red">Must</span>
+    </div>
+    <div class="resource-row">
+      <div><div class="res-name">Previous Year Questions (2016–2024)</div><div class="res-use">Minimum 20 PYQs per chapter. Disha or MTG publication compilations.</div></div>
+      <span class="badge badge-red">Must</span>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="ch-header"><span class="ch-title">Video — for concepts you cannot visualise</span></div>
+    <div class="resource-row">
+      <div><div class="res-name">Sachin Sir (NEET Biology) — YouTube</div><div class="res-use">Best for Genetics, Molecular Biology. Short, exam-focused. No time waste.</div></div>
+      <span class="badge badge-blue">Video</span>
+    </div>
+    <div class="resource-row">
+      <div><div class="res-name">Bhuvanesh Sir / Biomentors — YouTube</div><div class="res-use">Ecology, Biotechnology, Human Physiology. NCERT-aligned explanations.</div></div>
+      <span class="badge badge-blue">Video</span>
+    </div>
+    <div class="resource-row">
+      <div><div class="res-name">Dr. Vani Ma'am — YouTube</div><div class="res-use">Plant Physiology (photosynthesis, respiration). Clear step-by-step diagrams.</div></div>
+      <span class="badge badge-blue">Video</span>
+    </div>
+    <div class="ncert-box">Rule: Watch videos ONLY for your 3 weak areas (Classification, Genetics, Plant Physiology). For all other chapters, NCERT reading is faster and more effective. Do not waste 3 hrs watching when you could be solving MCQs.</div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="ch-header"><span class="ch-title">MCQ practice platforms</span></div>
+    <div class="resource-row">
+      <div><div class="res-name">NTA Abhyas App (Free)</div><div class="res-use">Official NTA mock tests. Most accurate to real exam pattern and difficulty.</div></div>
+      <span class="badge badge-green">Free</span>
+    </div>
+    <div class="resource-row">
+      <div><div class="res-name">Testbook / Embibe — NEET Bio section</div><div class="res-use">Chapter-wise MCQ banks. Use for daily 20-Q practice sprints.</div></div>
+      <span class="badge badge-green">Free tier</span>
+    </div>
+    <div class="resource-row">
+      <div><div class="res-name">MTG 33 Years NEET Chapterwise</div><div class="res-use">Best PYQ book. Use chapter-wise after each chapter. Not topic-wise — full chapter.</div></div>
+      <span class="badge badge-amber">Book</span>
+    </div>
+    <div class="resource-row">
+      <div><div class="res-name">Disha NEET Biology PYQ</div><div class="res-use">Alternative to MTG. Both are excellent — use whichever you have access to.</div></div>
+      <span class="badge badge-amber">Book</span>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="ch-header"><span class="ch-title">Quick reference tools</span></div>
+    <div class="resource-row">
+      <div><div class="res-name">Anki (Flashcard app, free)</div><div class="res-use">Create flashcards for hormones, disorders, enzyme names. Auto-spaced repetition.</div></div>
+      <span class="badge badge-green">Free app</span>
+    </div>
+    <div class="resource-row">
+      <div><div class="res-name">NCERT at your Fingertips — MTG</div><div class="res-use">MCQs extracted directly from NCERT lines. Good for revision phase (Day 13 onwards).</div></div>
+      <span class="badge badge-amber">Book</span>
+    </div>
+    <div class="tip-box">What NOT to use: Coaching institute notes as primary source. Pradeep's Biology (too detailed, wastes time). Random YouTube channels. Social media "NEET tips" reels. Every hour not on NCERT + PYQs is a lost hour.</div>
+  </div>
+</div>
+
+<div id="tab-recall" class="panel">
+  <div style="font-size:14px;font-weight:500;margin-bottom:4px">Active recall flashcards — test yourself without looking</div>
+  <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px">Read the question. Think. Then tap "Show answer" to check.</div>
+
+  <div class="recall-card">
+    <div class="recall-q">What enzyme catalyses the first step of replication — unwinding the DNA double helix?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">Helicase. It breaks hydrogen bonds between bases. Remember the order: Helicase → Primase → DNA Pol III → DNA Pol I → Ligase.</div>
+  </div>
+  <div class="recall-card">
+    <div class="recall-q">Name the enzyme that fixes CO2 in the Calvin cycle. What is the first stable product of C3 photosynthesis?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">RuBisCO (Ribulose bisphosphate carboxylase-oxygenase). First stable product = 3-phosphoglycerate (3-PGA), a 3-carbon compound.</div>
+  </div>
+  <div class="recall-card">
+    <div class="recall-q">What is the chromosome number and karyotype in Turner's syndrome? What are two key clinical features?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">45 chromosomes, karyotype 45,XO. Features: female phenotype, short stature, sterile (ovaries absent/streak ovaries), no secondary sex characters at puberty.</div>
+  </div>
+  <div class="recall-card">
+    <div class="recall-q">In the cardiac cycle, what causes the 'lub' sound and what causes the 'dub' sound?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">'Lub' = closure of mitral (bicuspid) + tricuspid valves at the start of ventricular systole. 'Dub' = closure of aortic + pulmonary semilunar valves at the end of ventricular systole.</div>
+  </div>
+  <div class="recall-card">
+    <div class="recall-q">What are the three C4 plants given in NCERT? Why are C4 plants more efficient than C3 in hot conditions?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">C4 plants: maize (corn), sugarcane, sorghum. More efficient because: CO2 is first fixed in mesophyll cells as a 4-carbon compound (OAA) and pumped to bundle sheath cells, concentrating CO2 around RuBisCO — this suppresses photorespiration.</div>
+  </div>
+  <div class="recall-card">
+    <div class="recall-q">What is the role of Nitrosomonas and Nitrobacter in the nitrogen cycle? What is the process called?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">Nitrification: Nitrosomonas converts NH3 → NO2⁻. Nitrobacter converts NO2⁻ → NO3⁻. Together they convert ammonium to nitrate, making nitrogen available to plants.</div>
+  </div>
+  <div class="recall-card">
+    <div class="recall-q">What is the net ATP yield of aerobic respiration per glucose? How is it distributed (substrate-level vs oxidative phosphorylation)?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">36–38 ATP total. Substrate-level phosphorylation: 4 ATP (2 glycolysis + 2 Krebs). Oxidative phosphorylation (ETC): 32–34 ATP from NADH and FADH2. Fermentation produces only 2 ATP (no ETC).</div>
+  </div>
+  <div class="recall-card">
+    <div class="recall-q">Name the vector used in recombinant DNA technology. What are the three essential components a vector must have?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">Common vectors: plasmids (e.g., pBR322), bacteriophages. Three essential components: (1) Origin of replication (ori), (2) Selectable marker (antibiotic resistance gene), (3) Restriction enzyme recognition site (cloning site).</div>
+  </div>
+  <div class="recall-card">
+    <div class="recall-q">In meiosis, at which specific sub-stage does crossing over occur? What structure forms at the crossover point?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">Crossing over occurs during Pachytene (sub-stage of Prophase I of Meiosis I). The structure formed at the crossover point is called a chiasma (plural: chiasmata).</div>
+  </div>
+  <div class="recall-card">
+    <div class="recall-q">What are the three PCR temperature steps and their purposes?</div>
+    <button class="reveal-btn" onclick="reveal(this)">Show answer</button>
+    <div class="recall-ans">1. Denaturation: ~94°C — separates DNA strands by breaking H-bonds. 2. Annealing: ~55°C — primers bind to complementary sequences. 3. Extension: 72°C — Taq polymerase synthesises new strand from primers.</div>
+  </div>
+
+  <button onclick="sendPrompt('Give me 10 more active recall questions on NEET Biology topics I am weak in — focus on Genetics, Plant Physiology, and Classification')" style="margin-top:8px;width:100%;padding:10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;font-size:13px">Generate 10 more recall questions ↗</button>
+</div>
+
+<div id="tab-tracker" class="panel">
+  <div style="font-size:14px;font-weight:500;margin-bottom:4px">Chapter completion tracker</div>
+  <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px">Click the progress bar to mark a chapter as complete (0 → 50% → 100%)</div>
+
+  <div id="tracker-list"></div>
+</div>
+
+<div id="tab-mistakes" class="panel">
+  <div style="font-size:14px;font-weight:500;margin-bottom:4px">Mistake log</div>
+  <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:12px">Log every wrong MCQ here. This becomes your Day 17 revision bible.</div>
+
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:12px">
+    <input id="m-chapter" placeholder="Chapter / topic" style="font-size:13px;padding:8px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary)">
+    <input id="m-topic" placeholder="What was the question about?" style="font-size:13px;padding:8px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary)">
+    <input id="m-fact" placeholder="Correct fact to remember" style="font-size:13px;padding:8px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary)">
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-bottom:16px">
+    <select id="m-type" style="font-size:13px;padding:8px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary)">
+      <option value="">Error type...</option>
+      <option>Didn't know the fact</option>
+      <option>Confused two similar facts</option>
+      <option>Silly reading mistake</option>
+      <option>Diagram not memorised</option>
+      <option>Guessed wrong</option>
+    </select>
+    <button onclick="addMistake()" style="padding:8px 16px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-info);background:var(--color-background-info);color:var(--color-text-info);cursor:pointer;font-size:13px;font-weight:500">Add entry</button>
+  </div>
+
+  <table class="mistake-table">
+    <thead>
+      <tr>
+        <th>Chapter</th>
+        <th>Topic / question</th>
+        <th>Correct fact</th>
+        <th>Error type</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="mistake-body">
+      <tr><td colspan="5" style="color:var(--color-text-tertiary);text-align:center;padding:16px">No entries yet. Add your first wrong MCQ above.</td></tr>
+    </tbody>
+  </table>
+  <div id="mistake-count" style="font-size:12px;color:var(--color-text-secondary);margin-top:8px"></div>
+</div>
+
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function reveal(btn) {
+  const ans = btn.nextElementSibling;
+  ans.classList.toggle('show');
+  btn.textContent = ans.classList.contains('show') ? 'Hide answer' : 'Show answer';
+}
+
+const chapters = [
+  {name:'Cell Biology & organelles', day:'Day 1'},
+  {name:'Cell Division (Mitosis & Meiosis)', day:'Day 2'},
+  {name:'Biomolecules & Enzymes', day:'Day 3'},
+  {name:'Genetics Part 1 — Mendel & deviations', day:'Day 4'},
+  {name:'Genetics Part 2 — Chromosomal disorders', day:'Day 5'},
+  {name:'Molecular Biology — DNA & Replication', day:'Day 7'},
+  {name:'Photosynthesis (light rxn + Calvin)', day:'Day 8'},
+  {name:'Respiration (Glycolysis + Krebs + ETC)', day:'Day 9'},
+  {name:'Human Physiology — Digestion & Circulation', day:'Day 10'},
+  {name:'Human Physiology — Excretion & Nerves & Hormones', day:'Day 11'},
+  {name:'Biotechnology', day:'Day 13'},
+  {name:'Ecology', day:'Day 14'},
+  {name:'Reproduction & Evolution & Health', day:'Day 15'},
+  {name:'Classification — Animal & Plant Kingdom', day:'Day 16'},
+];
+
+const progress = {};
+chapters.forEach(c => progress[c.name] = 0);
+
+function renderTracker() {
+  const list = document.getElementById('tracker-list');
+  list.innerHTML = chapters.map(c => {
+    const p = progress[c.name];
+    const badgeClass = p === 100 ? 'badge-green' : p === 50 ? 'badge-amber' : 'badge badge-blue';
+    const label = p === 100 ? 'Done' : p === 50 ? 'In progress' : 'Not started';
+    return `<div class="tracker-row">
+      <span style="font-size:13px">${c.name}</span>
+      <div>
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:3px">${c.day}</div>
+        <div class="prog-bar" onclick="cycleProgress('${c.name}')" style="cursor:pointer" title="Click to update progress">
+          <div class="prog-fill" id="fill-${c.name.replace(/[^a-z]/gi,'_')}" style="width:${p}%"></div>
+        </div>
+      </div>
+      <span class="badge ${badgeClass}" style="font-size:10px">${label}</span>
+    </div>`;
+  }).join('');
+}
+
+function cycleProgress(name) {
+  progress[name] = progress[name] === 0 ? 50 : progress[name] === 50 ? 100 : 0;
+  renderTracker();
+}
+
+renderTracker();
+
+const mistakes = [];
+function addMistake() {
+  const ch = document.getElementById('m-chapter').value.trim();
+  const tp = document.getElementById('m-topic').value.trim();
+  const fc = document.getElementById('m-fact').value.trim();
+  const ty = document.getElementById('m-type').value;
+  if (!ch || !tp || !fc) return;
+  mistakes.push({ch, tp, fc, ty});
+  ['m-chapter','m-topic','m-fact'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('m-type').value = '';
+  renderMistakes();
+}
+
+function deleteMistake(i) {
+  mistakes.splice(i, 1);
+  renderMistakes();
+}
+
+function renderMistakes() {
+  const tbody = document.getElementById('mistake-body');
+  if (!mistakes.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="color:var(--color-text-tertiary);text-align:center;padding:16px">No entries yet. Add your first wrong MCQ above.</td></tr>';
+    document.getElementById('mistake-count').textContent = '';
+    return;
+  }
+  tbody.innerHTML = mistakes.map((m,i) => `<tr>
+    <td style="font-weight:500">${m.ch}</td>
+    <td>${m.tp}</td>
+    <td style="color:var(--color-text-success)">${m.fc}</td>
+    <td><span class="badge badge-amber">${m.ty || 'Not specified'}</span></td>
+    <td><button onclick="deleteMistake(${i})" style="border:none;background:none;color:var(--color-text-danger);cursor:pointer;font-size:12px">Delete</button></td>
+  </tr>`).join('');
+  document.getElementById('mistake-count').textContent = `${mistakes.length} mistake${mistakes.length>1?'s':''} logged. Review these every 3 days.`;
+}
+</script>
+
+
+</div>
+
+<script>
+// save tracker progress
+const saved = JSON.parse(localStorage.getItem("neet-progress") || "{}");
+for (let key in saved) {
+  if (typeof progress !== 'undefined') progress[key] = saved[key];
+}
+if (typeof renderTracker === 'function') renderTracker();
+
+function cycleProgress(name) {
+  progress[name] = progress[name] === 0 ? 50 : progress[name] === 50 ? 100 : 0;
+  localStorage.setItem("neet-progress", JSON.stringify(progress));
+  renderTracker();
+}
+</script>
+
+</body>
+</html>
